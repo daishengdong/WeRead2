@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WeRead</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="rb_back">返回</string>
+    <string name="rb_search">搜索</string>
+    <string name="rb_setting">设置</string>
+
+</resources>

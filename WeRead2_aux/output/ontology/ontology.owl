@@ -1,0 +1,52 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:j.0="http://com/fatty/ontology.owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" > 
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#东坡肉">
+    <j.0:has_gushi rdf:resource="http://com/fatty/ontology.owl#东坡肉_故事"/>
+    <j.0:has_tese rdf:resource="http://com/fatty/ontology.owl#东坡肉_特色"/>
+    <rdf:type rdf:resource="http://com/fatty/ontology.owl#杭帮菜"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#小吃">
+    <rdfs:subClassOf rdf:resource="http://com/fatty/ontology.owl#美食"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#东坡肉_故事">
+    <rdf:type rdf:resource="http://com/fatty/ontology.owl#故事"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#has_gushi">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#吴山酥油饼_故事">
+    <rdf:type rdf:resource="http://com/fatty/ontology.owl#故事"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#杭帮菜">
+    <rdfs:subClassOf rdf:resource="http://com/fatty/ontology.owl#美食"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#has_tese">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#美食">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#吴山酥油饼_特色">
+    <rdf:type rdf:resource="http://com/fatty/ontology.owl#特色"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#特色">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#故事">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#东坡肉_特色">
+    <rdf:type rdf:resource="http://com/fatty/ontology.owl#特色"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://com/fatty/ontology.owl#吴山酥油饼">
+    <j.0:has_gushi rdf:resource="http://com/fatty/ontology.owl#吴山酥油饼_故事"/>
+    <j.0:has_tese rdf:resource="http://com/fatty/ontology.owl#吴山酥油饼_特色"/>
+    <rdf:type rdf:resource="http://com/fatty/ontology.owl#小吃"/>
+  </rdf:Description>
+</rdf:RDF>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".ListTestActivity" >
+
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal"
+    	android:background="@drawable/shelfbar">"
+        <ImageButton
+        	android:id="@+id/imgbt_local2first"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:background="@drawable/back" 
+        	android:layout_alignParentLeft="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginTop="5dp"/>"
+
+    	<ImageButton
+        	android:id="@+id/imgbt_tobookstore"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:background="@drawable/go" 
+        	android:layout_alignParentRight="true"
+        	android:layout_marginRight="5dp"
+        	android:layout_marginTop="5dp"
+        	/>
+    	<TextView 
+    	    android:id="@+id/tv_tobookstore"
+    	    android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_below="@id/imgbt_tobookstore"
+        	android:text="去书城    "
+        	android:layout_alignParentRight="true"
+        	android:textSize="12dp"
+        	android:textColor="@drawable/bookLocalTextColor"/>
+    	<TextView 
+    	    android:id="@+id/tv_back"
+    	    android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_below="@id/imgbt_local2first"
+        	android:text="   回首页"
+        	android:layout_alignParentLeft="true"
+        	android:textSize="12dp"
+        	android:textColor="@drawable/bookLocalTextColor"/>
+
+    	<TextView
+    	    android:id="@+id/tv_myshelf"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignBottom="@+id/imgbt_tobookstore"
+    	    android:layout_centerHorizontal="true"
+    	    android:text="我的书架"
+    	    android:textColor="@drawable/bookLocalTextColor" />
+
+    </RelativeLayout>
+    
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        
+         >
+
+    </ListView>
+
+</LinearLayout>
