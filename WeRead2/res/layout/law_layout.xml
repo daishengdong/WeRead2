@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white" >
+    android:layout_height="match_parent" >
+
+    <Spinner
+        android:id="@+id/index_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView1" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/index_search"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="搜索模式"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
         android:id="@+id/value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_below="@+id/index_search"
         android:layout_toLeftOf="@+id/query_bt" >
 
         <requestFocus />
@@ -19,7 +37,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="查询" />
+        android:layout_below="@+id/index_search"
+        android:text="搜索" />
 
     <ListView
         android:id="@+id/content_lv"

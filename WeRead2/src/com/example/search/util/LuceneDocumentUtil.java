@@ -20,7 +20,7 @@ public class LuceneDocumentUtil {
 		book.setName(doc.get("name"));
 		book.setContent(doc.get("content"));
 		book.setUrl(doc.get("url"));
-		book.setUrlType(UrlType.html_file_path);
+		book.setUrlType(Type.UrlType.html_file_path);
 		return book;
 	}
 

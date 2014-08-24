@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.example.search.po.Book;
-import com.example.search.util.UrlType;
+import com.example.search.util.Type;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
@@ -86,14 +86,14 @@ public class OntologyQuery {
 					book.setName("");
 					book.setContent("ÊôÓÚ" + propertyName);
 					book.setUrl(propertyName);
-					book.setUrlType(UrlType.ontology_class_name);
+					book.setUrlType(Type.UrlType.ontology_class_name);
 				} else {
 					String name = propertyName.replaceAll("_", "µÄ");
 					String content = getInfo(propertyName);
 					book.setName(name);
 					book.setContent(content);
 					book.setUrl(propertyName + ".txt");
-					book.setUrlType(UrlType.info_file_path);
+					book.setUrlType(Type.UrlType.info_file_path);
 				}
 				retList.add(book);
 			}
@@ -127,7 +127,7 @@ public class OntologyQuery {
 				book.setName("");
 				book.setContent(name);
 				book.setUrl(name);
-				book.setUrlType(UrlType.ontology_class_name);
+				book.setUrlType(Type.UrlType.ontology_class_name);
 				retList.add(book);
 			}
 			for(Iterator i = ontmodel.listIndividuals(res); i.hasNext();){
@@ -137,7 +137,7 @@ public class OntologyQuery {
 				book.setName("");
 				book.setContent(name);
 				book.setUrl(name);
-				book.setUrlType(UrlType.ontology_class_name);
+				book.setUrlType(Type.UrlType.ontology_class_name);
 				retList.add(book);
 			}
 		}

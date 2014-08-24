@@ -21,7 +21,7 @@ public class SearchActivity extends Activity {
 		setContentView(R.layout.law_layout);
 
 		Intent intent = getIntent();
-		cur_book_dir_path = intent.getStringExtra("cur_book_dir_path");
+		this.cur_book_dir_path = intent.getStringExtra("cur_book_dir_path");
 		this.initView();
 	}
 
@@ -32,6 +32,15 @@ public class SearchActivity extends Activity {
 	 * @date:2013-9-24
 	 */
 	private void initView() {
+		Spinner indexSearch_sp = (Spinner) super
+				.findViewById(R.id.index_search);
+		indexSearch_sp.setPrompt("搜索模式");
+		ArrayAdapter<CharSequence> item = ArrayAdapter.createFromResource(this,
+				R.array.indexOfSearch, android.R.layout.simple_spinner_item);
+		item.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		indexSearch_sp.setAdapter(item);
+
+
 		// 获取各个控件
 		EditText value_et = (EditText) super.findViewById(R.id.value);
 		Button search_bt = (Button) super.findViewById(R.id.query_bt);
@@ -39,8 +48,8 @@ public class SearchActivity extends Activity {
 
 		// 新建事件处理类，该类实现View.OnClickListener接口
 		SearchAction searchAction = new SearchAction(
-				this.getApplicationContext(), value_et,
-				bookListView, cur_book_dir_path);
+				this.getApplicationContext(), indexSearch_sp, value_et,
+				bookListView, this.cur_book_dir_path);
 
 		// 给搜索按钮注册点击事件
 		search_bt.setOnClickListener(searchAction);

@@ -21,7 +21,8 @@ import com.example.search.util.LuceneConfigurationUtil;
 import com.example.search.util.LuceneDocumentUtil;
 import com.example.search.util.LuneceHighlighterUtil;
 import com.example.search.util.MyUrl;
-import com.example.search.util.UrlType;
+import com.example.search.util.Type;
+import com.example.search.util.Type.SearchType;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -43,27 +44,33 @@ public class SearchService {
 		private String lucene_index_dir_path;
 		private String ontology_file_path;
 		private String info_dir_path;
-		private int searchType;
-        private ArrayList<Book> search_result = new ArrayList<Book>();
+		private Type.SearchType searchType;
+        private ArrayList<Book> search_result;
 		
-		public AsyncTaskExtension(String value, String cur_book_dir_path, int searchType) {
+		public AsyncTaskExtension(String value, String cur_book_dir_path, Type.SearchType searchType) {
 			super();
 			this.value = value;
 			this.cur_book_dir_path = cur_book_dir_path;
 			this.searchType = searchType;
 
-			this.lucene_index_dir_path = "file://" + this.cur_book_dir_path + "/lucene_index";
+			this.lucene_index_dir_path = this.cur_book_dir_path + "/lucene_index";
 			this.ontology_file_path = "file://" + this.cur_book_dir_path + "/ontology/ontology.owl";
 			this.info_dir_path = this.cur_book_dir_path + "/info";
 		}
 
 		private void SearchUsingOntology() {
 			OntModel ontmodel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
-			ontmodel.read(this.ontology_file_path);
+			try {
+				ontmodel.read(this.ontology_file_path);
 
-			OntologyQuery ontologyQuery = new OntologyQuery(ontmodel, this.info_dir_path);
-			search_result = ontologyQuery.query(value);
-			ontmodel.close();
+				OntologyQuery ontologyQuery = new OntologyQuery(ontmodel, this.info_dir_path);
+				search_result = ontologyQuery.query(value);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				ontmodel.close();
+				ontmodel = null;
+			}
 		}
 
 		private void SearchUsingLucene() {
@@ -107,6 +114,7 @@ public class SearchService {
 			} finally {
 				try {
 					indexSearcher.close();
+					indexSearcher = null;
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -114,14 +122,23 @@ public class SearchService {
 			}
 		}
 
-
 		@Override
 		protected Object doInBackground(Object... params) {
-			SearchUsingOntology();
-
-			if (this.searchType == 1) {
-				// SearchUsingLucene();
+			if (search_result == null) {
+				search_result = new ArrayList<Book>();
+			} else {
+				search_result.clear();
 			}
+
+			if (this.searchType == Type.SearchType.ontology_search) {
+				SearchUsingOntology();
+			} else if (this.searchType == Type.SearchType.lucene_search) {
+				SearchUsingLucene();
+			} else if (this.searchType == Type.SearchType.ontology_and_lucene_search){
+				SearchUsingOntology();
+				SearchUsingLucene();
+			}
+
 			return null;
 		}
 
@@ -188,9 +205,9 @@ public class SearchService {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				// 当用户点击某个item项时，用浏览器打开网页，查看更详细的信息
-				int cur_url_type = url.get(arg2).getType();
+				Type.UrlType cur_url_type = url.get(arg2).getType();
 				String url_path = url.get(arg2).getPath();
-				if (cur_url_type == UrlType.html_file_path) {
+				if (cur_url_type == Type.UrlType.html_file_path) {
 					String html_file_path = "file://" + cur_book_dir_path + "/" + url_path;
 					Toast.makeText(context, "展示 " + html_file_path + "网页", Toast.LENGTH_LONG).show();
 					Intent intent = new Intent();
@@ -200,13 +217,13 @@ public class SearchService {
 					System.out.println(cur_book_dir_path + "/" + url_path);
 					intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
 					context.startActivity(intent);
-				} else if (cur_url_type ==  UrlType.info_file_path) {
+				} else if (cur_url_type ==  Type.UrlType.info_file_path) {
 					// 如果是个描述文件，展示这个文件
 					String info_file_path = "file://" + cur_book_dir_path + "/info/" + url_path;
 					Toast.makeText(context, "展示 " + info_file_path + "文件内容", Toast.LENGTH_LONG).show();
-				} else if (cur_url_type ==  UrlType.ontology_class_name) {
+				} else if (cur_url_type ==  Type.UrlType.ontology_class_name) {
 					// 如果是个本体中的类，接着搜索这个类
-					queryBook(url_path, 2);
+					queryBook(url_path, Type.SearchType.ontology_search);
 				} else {
 					// 不知道什么鬼东西，这种情况一般不会发生
 					Toast.makeText(context, "非法的 URL", Toast.LENGTH_LONG).show();
@@ -214,6 +231,23 @@ public class SearchService {
 			}
 		});
 	}
+
+	/**
+	 * @function:获取搜索模式
+	 */
+	public Type.SearchType getSearchType(long item) {
+		if (item == 0) {
+			// 本体搜索
+			return Type.SearchType.ontology_search;
+		} else if (item == 1) {
+			// 全文搜索
+			return Type.SearchType.lucene_search;
+		} else {
+			// 本体和全文搜索
+			return Type.SearchType.ontology_and_lucene_search;
+		}
+	}
+
 
 	/**
 	 * 
@@ -224,9 +258,7 @@ public class SearchService {
 	 * @param value
 	 * @return ArrayList
 	 */
-	public void queryBook(String value, int searchType) {
-		// searchType 等于 1  的时候，表示本体、lucene 都要检索
-		// searchType 等于 2  的时候，表示只进行本体检索
+	public void queryBook(String value, Type.SearchType searchType) {
 		new AsyncTaskExtension(value, cur_book_dir_path, searchType).execute();
 	}
 

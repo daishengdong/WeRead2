@@ -1,10 +1,12 @@
 package com.example.search.po;
 
+import com.example.search.util.Type;
+
 public class Book {
 	private String name;
 	private String content;
 	private String url;
-	private int urlType;
+	private Type.UrlType urlType;
 
     public Book() {  
         super();  
@@ -18,11 +20,11 @@ public class Book {
 		this.url = url;
 	}
 
-	public int getUrlType() {
+	public Type.UrlType getUrlType() {
 		return urlType;
 	}
 
-	public void setUrlType(int urlType) {
+	public void setUrlType(Type.UrlType urlType) {
 		this.urlType = urlType;
 	}
 
